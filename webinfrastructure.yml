@@ -1,0 +1,53 @@
+- name: webinfrastructure
+  hosts: 
+    - vmapache
+    - vmmariadb
+    - vmnginx
+    - vmdns
+  become: yes
+  remote_user: avelon
+
+  vars: 
+    varReboot: false
+
+
+  pre_tasks:
+    - name: install necessary apache packages
+      when: inventory_hostname in groups['vmapache']
+      apt:
+        name: 
+          - apache2
+          - git
+        state: latest
+
+    - name: install necessary mariadb packages
+      when: inventory_hostname in groups['vmmariadb']
+      apt:
+        name: 
+          - mariadb
+          - git
+        state: latest
+
+    - name: install necessary dns packages
+      when: inventory_hostname in groups['vmdns']
+      apt:
+        name: 
+          - dnsmasq
+          - git
+        state: latest
+
+    - name: install necessary nginx packages
+      when: inventory_hostname in groups['vmnginx']
+      apt:
+        name: 
+          - nginx
+          - git
+        state: latest
+
+  roles:
+    - {role: startInfrastructure, when: here is the question if I should set the if statement here or in the task}
+
+  post_tasks:
+    - name: reboot all hosts
+      reboot:
+      when: varReboot is defined and varReboot
