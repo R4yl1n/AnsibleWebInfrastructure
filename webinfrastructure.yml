@@ -16,7 +16,7 @@
       when: inventory_hostname in groups['vmapache']
       apt:
         name: 
-          - apache2
+          - docker.io
           - git
         state: latest
 
