@@ -1,12 +1,6 @@
 - name: Run apache2/wordpress in dockercontainer
   when: inventory_hostname in groups['vmapache']
-  docker_container:
-      name: wordpress
-      image: raylin366/readytosetupdb
-      state: started
-      ports:
-        - "8000:80"
-      command: systemctl start apache2
+  shell: docker pull raylin366/readytosetupdb && docker run -it -d -p 8000:80 --name wordpress raylin366/readytosetupdb systemctl start apache2
 
 - name: copy nginxconf with cache
   when: inventory_hostname in groups['vmnginxwithcache']
