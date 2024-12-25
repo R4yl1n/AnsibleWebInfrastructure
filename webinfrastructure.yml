@@ -2,7 +2,8 @@
   hosts: 
     - vmapache
     - vmmariadb
-    - vmnginx
+    - vmnginxnocache
+    - vmnginxwithcache
     - vmdns
   become: yes
   remote_user: avelon
@@ -24,7 +25,7 @@
       when: inventory_hostname in groups['vmmariadb']
       apt:
         name: 
-          - mariadb
+          - mariadb-server
           - git
         state: latest
 
@@ -37,7 +38,7 @@
         state: latest
 
     - name: install necessary nginx packages
-      when: inventory_hostname in groups['vmnginx']
+      when: inventory_hostname in groups['vmnginxnocache', 'vmnginxwithcache']
       apt:
         name: 
           - nginx
@@ -45,7 +46,7 @@
         state: latest
 
   roles:
-    - {role: startInfrastructure, when: here is the question if I should set the if statement here or in the task}
+    - startInfrastructure
 
   post_tasks:
     - name: reboot all hosts

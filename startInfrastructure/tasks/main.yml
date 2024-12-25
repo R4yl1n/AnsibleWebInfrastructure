@@ -2,4 +2,33 @@
   when: inventory_hostname in groups['vmapache']
   shell: docker pull raylin366/readytosetupdb && docker run -it -d -p 8000:80 --name wordpress raylin366/readytosetupdb systemctl start apache2
 
-- name: run nginx
+- name: run nginx with cache
+  when: inventory_hostname in groups['vmnginxwithcache']
+  copy:
+    src: nginxconf/withCache/nginx.conf
+    dest: /etc/nginx/nginx.conf
+  copy:
+    src: nginxconf/withCache/default.conf
+    dest: /etc/nginx/conf.d/default.conf
+  shell: systmectl restart nginx
+
+- name: run nginx no Cache
+  when: inventory_hostname in groups['vmnginxnocache']
+  copy:
+    src: nginxconf/noCache/nginx.conf
+    dest: /etc/nginx/nginx.conf
+  copy:
+    src: nginxconf/noCache/default.conf
+    dest: /etc/nginx/conf.d/default.conf
+  shell: systmectl restart nginx
+
+- name: run mariadb
+  when: inventory_hostname in groups['vmmariadb']
+  shell: systemctl start mariadb
+
+- name: run dns
+  when: inventory_hostname in groups['vmdns']
+  copy: 
+    src: dnsconf/hosts
+    dest: /etc/hosts
+  shell: systemctl start dnsmasq
