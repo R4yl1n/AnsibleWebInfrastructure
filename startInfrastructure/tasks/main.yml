@@ -50,7 +50,3 @@
     path: /etc/hosts
     line: "127.0.1.1  {{ ansible_facts['hostname'] }}"
     create: yes
-
-- name: start dns service
-  when: inventory_hostname in groups['vmdns']
-  shell: systemctl start dnsmasq && systemctl enable dnsmasq
