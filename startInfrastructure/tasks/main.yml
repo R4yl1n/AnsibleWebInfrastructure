@@ -43,6 +43,9 @@
   copy: 
     src: dnsconf/hosts
     dest: /etc/hosts
+
+- name: append hostname
+  when: inventory_hostname in groups['vmdns']
   shell: sed -i "127.0.1.1  {{ ansible_facts['hostname'] }}" /etc/hosts
 
 - name: start dns service
