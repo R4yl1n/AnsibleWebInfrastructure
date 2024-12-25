@@ -64,3 +64,7 @@
     - name: reboot all hosts
       reboot:
       when: varReboot is defined and varReboot
+    
+    - name: start dnsmasq
+      when: inventory_hostname in groups['vmdns']
+      shell: systemctl start systemd-resolved.service && systemctl stop systemd-resolved.service && systemctl start dnsmasq 
