@@ -45,6 +45,9 @@
           - nginx
           - git
         state: latest
+      user:
+        name: nginx
+        shell: /bin/false
 
   roles:
     - startInfrastructure
