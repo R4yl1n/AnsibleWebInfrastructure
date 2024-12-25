@@ -40,7 +40,9 @@
 
 - name: copy hosts file dns
   when: inventory_hostname in groups['vmdns']
-  shell: echo -e "192.168.55.13   wordpress.raylin.org \n192.168.55.13   wordpress.raylin.org" > /etc/hosts
+  copy: 
+    src: dnsconf/hosts
+    dest: /etc/hosts
 
 
 - name: start dns service
