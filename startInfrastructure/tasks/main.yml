@@ -6,8 +6,8 @@
       state: started
       ports:
         - "8000:80"
-    command: systemctl start apache2
-    
+      command: systemctl start apache2
+
 - name: copy nginxconf with cache
   when: inventory_hostname in groups['vmnginxwithcache']
   copy:
