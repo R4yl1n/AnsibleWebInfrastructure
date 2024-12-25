@@ -38,6 +38,12 @@
   when: inventory_hostname in groups['vmmariadb']
   shell: systemctl start mariadb && systemctl enable mariadb
 
+- name: copy dnsmasq.conf
+  when: inventory_hostname in groups['vmdns']
+  copy:
+    src: dnsconf/dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+
 - name: copy hosts file dns
   when: inventory_hostname in groups['vmdns']
   copy: 
