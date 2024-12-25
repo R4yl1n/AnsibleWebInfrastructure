@@ -38,7 +38,9 @@
         state: latest
 
     - name: install necessary nginx packages
-      when: inventory_hostname in groups['vmnginxnocache', 'vmnginxwithcache']
+      when: 
+        - inventory_hostname in groups['vmnginxnocache']
+        - inventory_hostname in groups['vmnginxwithcache']
       apt:
         name: 
           - nginx
@@ -47,6 +49,7 @@
 
   roles:
     - startInfrastructure
+
 
   post_tasks:
     - name: reboot all hosts
