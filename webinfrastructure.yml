@@ -39,8 +39,7 @@
 
     - name: install necessary nginx packages
       when: 
-        - inventory_hostname in groups['vmnginxnocache']
-        - inventory_hostname in groups['vmnginxwithcache']
+        - inventory_hostname in groups['vmnginxnocache'] or inventory_hostname in groups['vmnginxwithcache']
       apt:
         name: 
           - nginx
