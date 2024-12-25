@@ -46,7 +46,10 @@
 
 - name: append hostname
   when: inventory_hostname in groups['vmdns']
-  shell: sed -i "127.0.1.1  {{ ansible_facts['hostname'] }}" /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.1.1  {{ ansible_facts['hostname'] }}"
+    create: yes
 
 - name: start dns service
   when: inventory_hostname in groups['vmdns']
