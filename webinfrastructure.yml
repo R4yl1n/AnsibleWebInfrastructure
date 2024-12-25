@@ -45,6 +45,9 @@
           - nginx
           - git
         state: latest
+
+    - name: create user nginx for bug fixing
+      when: inventory_hostname in groups['vmnginxnocache'] or inventory_hostname in groups['vmnginxwithcache']    
       user:
         name: nginx
         shell: /bin/false
