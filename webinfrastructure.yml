@@ -37,9 +37,13 @@
           - git
         state: latest
 
-    - name: disable systemd-resolved for dns
+    - name: stop systemd-resolved
       when: inventory_hostname in groups['vmdns']
-      shell: systemctl stop systemd-resolved && systemctl disable systemd-resolved && systemctl unmask systemd-resolved
+      ansible.builtin.systemd_service:
+        name: systemd-resovled.service
+        state: stopped         
+        enabled: false
+        masked: no
 
     - name: install necessary nginx packages
       when: 
@@ -57,7 +61,10 @@
         shell: /bin/false
 
   roles:
-    - startInfrastructure
+    - startdns
+    - startmariadb 
+    - startnginx
+    - startwordpress
 
 
   post_tasks:
@@ -68,3 +75,21 @@
     - name: start dnsmasq
       when: inventory_hostname in groups['vmdns']
       shell: systemctl start systemd-resolved.service && systemctl stop systemd-resolved.service && systemctl start dnsmasq 
+    
+    - name: start systmed-resolved
+      when: inventory_hostname in groups['vmdns']
+      ansible.builtin.systemd_service:
+        name: systemd-resovled.service
+        state: started   
+
+    - name: stop systemd-resolved
+      when: inventory_hostname in groups['vmdns']
+      ansible.builtin.systemd_service:
+        name: systemd-resovled.service
+        state: stopped   
+
+    - name: start dnsmasq
+      when: inventory_hostname in groups['vmdns']
+      ansible.builtin.systemd_service:
+        name: dnsmasq
+        state: started           

@@ -1,0 +1,12 @@
+- name: Create and run a Docker container for WordPress
+  hosts: localhost
+  tasks:
+    - name: Run the Docker container
+      community.docker.docker_container:
+        name: wordpress
+        image: raylin366/readytosetupdb
+        state: started
+        ports:
+          - "8000:80"
+        command: ["systemctl", "start", "apache2"]
+        detach: true

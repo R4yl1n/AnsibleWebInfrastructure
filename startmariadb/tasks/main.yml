@@ -1,0 +1,3 @@
+- name: run mariadb
+  when: inventory_hostname in groups['vmmariadb']
+  shell: systemctl start mariadb && systemctl enable mariadb

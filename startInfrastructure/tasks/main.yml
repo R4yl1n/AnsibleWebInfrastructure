@@ -1,3 +1,4 @@
+#is not used just for learning purposes here
 - name: Run apache2/wordpress in dockercontainer
   when: inventory_hostname in groups['vmapache']
   shell: docker pull raylin366/readytosetupdb && docker run -it -d -p 8000:80 --name wordpress raylin366/readytosetupdb systemctl start apache2
