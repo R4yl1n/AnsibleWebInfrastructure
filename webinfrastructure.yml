@@ -7,6 +7,8 @@
     - vmdns
   become: yes
   remote_user: avelon
+  collections:
+    - community.docker
 
   vars: 
     varReboot: false
