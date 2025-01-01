@@ -41,7 +41,7 @@
 
     - name: stop systemd-resolved
       when: inventory_hostname in groups['vmdns']
-      ansible.builtin.systemd_service:
+      ansible.builtin.systemd:
         name: systemd-resolved.service
         state: stopped         
         enabled: false
