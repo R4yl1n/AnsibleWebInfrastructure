@@ -80,18 +80,18 @@
     
     - name: start systmed-resolved
       when: inventory_hostname in groups['vmdns']
-      ansible.builtin.systemd_service:
-        name: systemd-resovled.service
+      ansible.builtin.systemd:
+        name: systemd-resolved.service
         state: started   
 
     - name: stop systemd-resolved
       when: inventory_hostname in groups['vmdns']
-      ansible.builtin.systemd_service:
-        name: systemd-resovled.service
+      ansible.builtin.systemd:
+        name: systemd-resolved.service
         state: stopped   
 
     - name: start dnsmasq
       when: inventory_hostname in groups['vmdns']
-      ansible.builtin.systemd_service:
+      ansible.builtin.systemd:
         name: dnsmasq
         state: started           
