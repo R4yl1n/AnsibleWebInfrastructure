@@ -1,4 +1,5 @@
 - name: Run the Docker container
+  when: inventory_hostname in groups['vmapache']
   community.docker.docker_container:
     name: wordpress
     image: raylin366/readytosetupdb
