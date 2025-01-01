@@ -45,7 +45,7 @@
         name: systemd-resolved.service
         state: stopped         
         enabled: false
-        mask: no
+        masked: no
 
     - name: install necessary nginx packages
       when: 
