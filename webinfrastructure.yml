@@ -63,10 +63,17 @@
         shell: /bin/false
 
   roles:
-    - startdns
-    - startmariadb 
-    - startnginx
-    - startwordpress
+    - role: startdns
+      when: inventory_hostname in groups['vmdns']    
+    - role: startmariadb 
+      when: inventory_hostname in groups['vmmariadb']
+    - role: startnginxwithcache
+      when: inventory_hostname in groups['vmnginxwithcache']
+    - role: startnginxnocache
+      when: inventory_hostname in groups['vmnginxnocache']
+    - role: startwordpress
+      when: inventory_hostname in groups['vmapache']
+
 
 
   post_tasks:

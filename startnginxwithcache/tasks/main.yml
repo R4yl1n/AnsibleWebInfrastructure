@@ -13,19 +13,3 @@
 - name: start nginx with cache
   when: inventory_hostname in groups['vmnginxwithcache']
   shell: systemctl start nginx && systemctl enable nginx
-
-- name: copy nginx.conf no Cache
-  when: inventory_hostname in groups['vmnginxnocache']
-  copy:
-    src: nginxconf/noCache/nginx.conf
-    dest: /etc/nginx/nginx.conf
-
-- name: copy nginx default.conf no Cache - default config
-  when: inventory_hostname in groups['vmnginxnocache']
-  copy:
-    src: nginxconf/noCache/default.conf
-    dest: /etc/nginx/conf.d/default.conf
-
-- name: start nginx no Cache
-  when: inventory_hostname in groups['vmnginxnocache']
-  shell: systemctl start nginx && systemctl enable nginx
