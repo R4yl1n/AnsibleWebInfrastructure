@@ -1,17 +1,14 @@
 - name: copy dnsmasq.conf
-  when: inventory_hostname in groups['vmdns']
   copy:
     src: dnsconf/dnsmasq.conf
     dest: /etc/dnsmasq.conf
 
 - name: copy hosts file dns
-  when: inventory_hostname in groups['vmdns']
   copy: 
     src: dnsconf/hosts
     dest: /etc/hosts
 
 - name: append hostname
-  when: inventory_hostname in groups['vmdns']
   lineinfile:
     path: /etc/hosts
     line: "127.0.1.1  {{ ansible_facts['hostname'] }}"
