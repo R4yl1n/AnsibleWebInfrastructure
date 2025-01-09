@@ -1,10 +1,6 @@
 - name: webinfrastructure
   hosts: 
-    - vmapache
-    - vmmariadb
-    - vmnginxnocache
-    - vmnginxwithcache
-    - vmdns
+    - avelon
   become: yes
   remote_user: avelon
   collections:
@@ -80,11 +76,7 @@
     - name: reboot all hosts
       reboot:
       when: varReboot is defined and varReboot
-    
-    - name: start dnsmasq
-      when: inventory_hostname in groups['vmdns']
-      shell: systemctl start systemd-resolved.service && systemctl stop systemd-resolved.service && systemctl start dnsmasq 
-    
+        
     - name: start systmed-resolved
       when: inventory_hostname in groups['vmdns']
       ansible.builtin.systemd:
